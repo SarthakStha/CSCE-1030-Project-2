@@ -5,7 +5,7 @@
 
 using namespace std;
 
-//enum choices {displayLeft = 1, displayRight = 2, guess = 3, reset = 4, exit = 5};
+// enum choices {displayLeft = 1, displayRight = 2, guess = 3, reset = 4, exit = 5};
 
 // prints the student information header
 void header(){
@@ -66,12 +66,86 @@ string getName(){
 
 }
 
+//
+void genShowMatrix(int matrix[5][5], int rows , int column){
+
+    // const int rows = 5;
+    // const int column = 5;
+    // int matrix[rows][column];
+
+    for (int i = 0; i < rows; i++){
+        for(int j = 0; j < column; j++){
+            matrix[i][j] = -1;
+            cout << matrix[i][j] << "\t";
+        }
+        cout << endl;
+    }
+}
+
+//
+void genHideMatrix(int lowerBound, int upperBound){
+
+    srand((time(0)));
+    const int rows = 5;
+    const int column = 5;
+
+    int hiddenMatrix[rows][column]; 
+
+    for (int i = 0; i < rows; i++){
+        for (int j = 0; j < column; j++){
+            hiddenMatrix[i][j] = (rand()%(1 + upperBound - lowerBound)) + lowerBound;
+            cout << hiddenMatrix[i][j] << "\t";
+        }
+        cout << endl;
+        
+    }
+    
+
+}
+
+//
+void initialize(int displayedLowerBound = -1, int displayedUpperBound = -1){
+
+    //generating upper bound and lower bound for guess number generation range
+    int lowerBound = (rand()%(100) + 100);
+    int upperBound = (rand()%(100) + 200);
+
+    cout << displayedLowerBound << "\t\t" << displayedUpperBound << endl;
+    
+    cout << lowerBound << "\t\t" << upperBound << endl;
+
+    genHideMatrix(lowerBound, upperBound);
+
+
+}
+
 int main(){
 
-    header();
+    srand(time(0));
+    int userScore = 100;
+    int displayedLowerBound;
+    int displayedUpperBound;
 
-    cout << "Welcome to the game " + getName() + ".";
+    string userName;
 
+    const int rows = 5;
+    const int column = 5;
+    int matrix[rows][column];
+
+    genShowMatrix(matrix, rows, column);
+
+    initialize();
+
+
+
+
+    //header();
+    //getName();
+    //cout << "Welcome to the game " + username + ".";
+
+    //genShowMatrix();
+
+    //genHideMatrix(100,200);
 
     return 0;
 
