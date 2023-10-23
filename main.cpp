@@ -5,6 +5,8 @@
 
 using namespace std;
 
+const enum options {DisplayLeft = 1, DisplayRight = 2, Guess = 3, Change = 4, Exit = 5};
+
 // prints the student information header
 void header(){
 
@@ -70,9 +72,7 @@ void genShowMatrix(int matrix[5][5], int rows , int column){
     for (int i = 0; i < rows; i++){
         for(int j = 0; j < column; j++){
             matrix[i][j] = -1;
-            //cout << matrix[i][j] << "\t";
         }
-        //cout << endl;
     }
 }
 
@@ -109,11 +109,12 @@ void initialize(int matrix[5][5], int hiddenMatrix[5][5],int lowerBound = 0, int
     genHideMatrix(hiddenMatrix, 5, 5,lowerBound, upperBound);
 
 }
+ 
 
 int main(){
 
     //options menu
-    enum options {displayLeft = 1, displayRight = 2, guess = 3, change = 4, exit = 5};
+    
     int userChoice;
     options choices;
 
@@ -164,7 +165,7 @@ int main(){
 
         switch (choices)
         {
-            case displayLeft:
+            case DisplayLeft:
 
                 if(displayedUpperBound == -1){                   
                         
@@ -180,7 +181,7 @@ int main(){
 
         break;
 
-        case displayRight:
+        case DisplayRight:
             if(displayedLowerBound == -1){                   
                         
                     displayedUpperBound = upperBound;
@@ -194,17 +195,17 @@ int main(){
                 };
         break;
 
-        case guess:
+        case Guess:
         /* code */
         break;
 
-        case change:
+        case Change:
             initialize(matrix, hiddenMatrix);
             userScore -= 1;
         break;
 
-        case exit:
-        /* code */
+        case Exit:
+            /* code */
         break;
     
         default :
