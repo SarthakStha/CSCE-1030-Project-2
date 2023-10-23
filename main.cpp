@@ -5,7 +5,125 @@
 
 using namespace std;
 
-const enum options {DisplayLeft = 1, DisplayRight = 2, Guess = 3, Change = 4, Exit = 5};
+enum options {DisplayLeft = 1, DisplayRight = 2, Guess = 3, Change = 4, Exit = 5};
+
+void header();
+
+string getName();
+
+void genShowMatrix(int matrix[5][5], int rows , int column);
+
+void genHideMatrix(int hiddenMatrix[5][5], int lowerBound, int upperBound,  int rows, int column);
+
+void initialize(int hiddenMatrix[5][5], int matrix[5][5], int &lowerBound, int &upperBound, int displayedLowerBound, int displayedUpperBound);
+
+int main(){
+
+    //options menu
+    int userChoice;
+    options choices;
+
+    //user's name and score variable
+    string userName;
+    int userScore = 100;
+
+    // score gain or loss
+    int pointGain = 5;
+    int pointLoss = 5;  
+
+    // randon no generation range variable
+    srand(time(0));
+    int displayedLowerBound = -1;
+    int lowerBound = 0;
+    int displayedUpperBound = -1;
+    int upperBound = 0;
+
+    // displayed and hidden array specification
+    const int rows = 5;
+    const int column = 5;
+    int matrix[rows][column];
+    int hiddenMatrix[rows][column];
+
+    header();
+
+    initialize(hiddenMatrix, matrix, lowerBound, upperBound, displayedLowerBound, displayedUpperBound);
+
+    userName = getName(); 
+
+    cout << "Welcome to the game " << userName << "." << endl;
+
+//    do{
+        //upperbound and lower bound display
+        cout << displayedLowerBound << "\t\t" << displayedUpperBound << endl;
+
+        //user choice prompt
+        cout << "1. Display Left Number" << endl;
+        cout << "2. Display Right Number" << endl;
+        cout << "3. Guess a number in between" << endl;
+        cout << "4. Change Numbers" << endl;
+        cout << "5. Exit" << endl;
+
+        cout << "What would you like to do? ";
+        cin  >> userChoice;
+
+        choices = static_cast<options>(userChoice);
+
+
+        switch (choices)
+        {
+            case DisplayLeft:
+
+                if(displayedUpperBound == -1){                   
+                        
+                    displayedLowerBound = lowerBound;
+                    pointGain = 1;
+                    pointLoss = 10;                           
+                    //cout << displayedLowerBound << endl;                          
+                    cout << "Now, you will gain " << pointGain << "  points for guessing correctly and lose " << pointLoss << " for guessing incorrectly" << endl;
+                        
+                } else{
+                    cout << "You have already displayed the right boundary, you cannot display both." << endl;
+                };
+
+        break;
+
+        case DisplayRight:
+            if(displayedLowerBound == -1){                   
+                        
+                    displayedUpperBound = upperBound;
+                    pointGain = 1;
+                    pointLoss = 10; 
+                    //cout << displayedUpperBound << endl;                          
+                    cout << "Now, you will gain " << pointGain << "  points for guessing correctly and lose " << pointLoss << " for guessing incorrectly" << endl;
+                        
+                } else{
+                    cout << "You have already displayed the left boundary, you cannot display both." << endl;
+                };
+        break;
+
+        case Guess:
+        /* code */
+        break;
+
+        case Change:
+            //initialize(hiddenMatrix, matrix);
+            userScore -= 1;
+        break;
+
+        case Exit:
+            /* code */
+        break;
+    
+        default :
+
+        break;
+    }
+
+//    } while ();
+    
+    return 0;
+
+}
 
 // prints the student information header
 void header(){
@@ -67,7 +185,7 @@ string getName(){
 }
 
 //generates the shown matrix in a blank stae of 5x5 matrix -1 values 
-void genShowMatrix(int matrix[5][5], int rows , int column){
+void genShowMatrix(int matrix[5][5], int rows =5, int column =5){
 
     for (int i = 0; i < rows; i++){
         for(int j = 0; j < column; j++){
@@ -77,13 +195,11 @@ void genShowMatrix(int matrix[5][5], int rows , int column){
 }
 
 //generates a 5x5 matrix with random value from within passed lowerbound and upperbound
-void genHideMatrix(int hiddenMatrix[5][5], int rows, int column, int lowerBound, int upperBound){
+void genHideMatrix(int hiddenMatrix[5][5],int lowerBound, int upperBound, int rows = 5, int column = 5){
     
     srand((time(0)));
     // const int rows = 5;
     // const int column = 5;
-
-    // int hiddenMatrix[rows][column]; 
 
     for (int i = 0; i < rows; i++){
         for (int j = 0; j < column; j++){
@@ -95,7 +211,7 @@ void genHideMatrix(int hiddenMatrix[5][5], int rows, int column, int lowerBound,
 }
 
 //
-void initialize(int matrix[5][5], int hiddenMatrix[5][5],int lowerBound = 0, int upperBound = 0, int displayedLowerBound = -1, int displayedUpperBound = -1){
+void initialize(int hiddenMatrix[5][5], int matrix[5][5], int &lowerBound, int &upperBound, int displayedLowerBound = -1, int displayedUpperBound = -1){
 
     //generating upper bound and lower bound for guess number generation range
     lowerBound = (rand()%(100) + 100);
@@ -105,117 +221,34 @@ void initialize(int matrix[5][5], int hiddenMatrix[5][5],int lowerBound = 0, int
     
     cout << lowerBound << "\t\t" << upperBound << endl;
 
-    genShowMatrix(matrix, 5,5);
-    genHideMatrix(hiddenMatrix, 5, 5,lowerBound, upperBound);
+    genShowMatrix(matrix);
+    genHideMatrix(hiddenMatrix, lowerBound, upperBound);
 
 }
  
-
-int main(){
-
-    //options menu
+ //
+void guess(int hiddenMatrix[5][5], int pointGain, int pointLoss, int rows = 5, int column = 5){
     
-    int userChoice;
-    options choices;
+    int userGuess;
 
-    //user's name and score variable
-    string userName;
-    int userScore = 100;
+    cout << "Enter your guess: ";
+    cin  >> userGuess;
 
-    // score gain or loss
-    int pointGain = 5;
-    int pointLoss = 5;  
-
-    // randon no generation range variable
-    srand(time(0));
-    int displayedLowerBound = -1;
-    int lowerBound = 0;
-    int displayedUpperBound = -1;
-    int upperBound = 0;
-
-    const int rows = 5;
-    const int column = 5;
-    int matrix[rows][column];
-    int hiddenMatrix[rows][column];
-
-    header();
-
-    initialize(matrix, hiddenMatrix);
-
-    userName = getName(); 
-
-    cout << "Welcome to the game " << userName << "." << endl;
-
-//    do{
-        //upperbound and lower bound display
-        cout << displayedLowerBound << "\t\t" << displayedUpperBound << endl;
-
-        //user choice prompt
-        cout << "1. Display Left Number" << endl;
-        cout << "2. Display Right Number" << endl;
-        cout << "3. Guess a number in between" << endl;
-        cout << "4. Change Numbers" << endl;
-        cout << "5. Exit" << endl;
-
-        cout << "What would you like to do? ";
-        cin  >> userChoice;
-
-        choices = static_cast<options>(userChoice);
-
-
-        switch (choices)
+    for(int i = 0; i < rows; i++){
+        for (int j = 0; j < column; j++)
         {
-            case DisplayLeft:
+            if (userGuess == hiddenMatrix[i][j]){
+                
+            }else{
+                
+                cout << "You guessed incorrectly. You lose ";
+            }
+            
+        }
+        
 
-                if(displayedUpperBound == -1){                   
-                        
-                    displayedLowerBound = lowerBound;
-                    pointGain = 1;
-                    pointLoss = 10;                           
-                    cout << displayedLowerBound << endl;                          
-                    cout << "Now, you will gain " << pointGain << "  points for guessing correctly and lose " << pointLoss << " for guessing incorrectly" << endl;
-                        
-                } else{
-                    cout << "You have already displayed the right boundary, you cannot display both." << endl;
-                };
 
-        break;
-
-        case DisplayRight:
-            if(displayedLowerBound == -1){                   
-                        
-                    displayedUpperBound = upperBound;
-                    pointGain = 1;
-                    pointLoss = 10; 
-                    cout << displayedUpperBound << endl;                          
-                    cout << "Now, you will gain " << pointGain << "  points for guessing correctly and lose " << pointLoss << " for guessing incorrectly" << endl;
-                        
-                } else{
-                    cout << "You have already displayed the left boundary, you cannot display both." << endl;
-                };
-        break;
-
-        case Guess:
-        /* code */
-        break;
-
-        case Change:
-            initialize(matrix, hiddenMatrix);
-            userScore -= 1;
-        break;
-
-        case Exit:
-            /* code */
-        break;
-    
-        default :
-
-        break;
     }
 
-//    } while ();
-    
-    return 0;
-
-}
+};
 
