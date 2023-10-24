@@ -17,6 +17,10 @@ void genHideMatrix(int hiddenMatrix[5][5], int lowerBound, int upperBound,  int 
 
 void initialize(int hiddenMatrix[5][5], int matrix[5][5], int &lowerBound, int &upperBound, int displayedLowerBound, int displayedUpperBound);
 
+void guess(int hiddenMatrix[5][5], int matrix[5][5], int pointGain, int pointLoss, int userScore ,int rows, int column);
+
+void eliminate(int matrix[5][5], int eliminateRow, int eliminateColumn, int rows, int column);
+
 int main(){
 
     //options menu
@@ -102,12 +106,13 @@ int main(){
         break;
 
         case Guess:
-        /* code */
+            guess(hiddenMatrix, matrix, pointGain, pointLoss, userScore,  rows, column);
         break;
 
         case Change:
-            //initialize(hiddenMatrix, matrix);
+            initialize(hiddenMatrix, matrix, lowerBound, upperBound, displayedLowerBound, displayedUpperBound);
             userScore -= 1;
+            cout << "You lose 1 point for chosing to reset the board.\nYour remaining points = " << userScore;
         break;
 
         case Exit:
@@ -204,9 +209,9 @@ void genHideMatrix(int hiddenMatrix[5][5],int lowerBound, int upperBound, int ro
     for (int i = 0; i < rows; i++){
         for (int j = 0; j < column; j++){
             hiddenMatrix[i][j] = (rand()%(1 + upperBound - lowerBound)) + lowerBound;
-            //cout << hiddenMatrix[i][j] << "\t";
+            cout << hiddenMatrix[i][j] << "\t";
         }
-        //cout << endl;    
+        cout << endl;    
     }
 }
 
@@ -227,28 +232,50 @@ void initialize(int hiddenMatrix[5][5], int matrix[5][5], int &lowerBound, int &
 }
  
  //
-void guess(int hiddenMatrix[5][5], int pointGain, int pointLoss, int rows = 5, int column = 5){
+void guess(int hiddenMatrix[5][5], int matrix[5][5], int pointGain, int pointLoss, int userScore ,int rows = 5, int column = 5){
     
     int userGuess;
 
     cout << "Enter your guess: ";
     cin  >> userGuess;
+    bool found = false;
 
     for(int i = 0; i < rows; i++){
         for (int j = 0; j < column; j++)
         {
             if (userGuess == hiddenMatrix[i][j]){
-                
-            }else{
-                
-                cout << "You guessed incorrectly. You lose ";
+                found = true;
+                userScore += pointGain;
+                cout << "You guessed correctly. You gain " << pointGain << " points" << endl;
+                cout << "Your remaining points = " << userScore << endl;
+                eliminate(matrix, i, j, rows, column);
+                break;
             }
-            
         }
-        
-
-
     }
+    if ( found == false){
+        userScore -= pointLoss;
+        cout << "You guessed incorrectly. You lose " << pointLoss << " points" << endl;
+        cout << "Your remaining points = " << userScore << endl;
+    }
+
 
 };
 
+//
+void eliminate(int matrix[5][5], int eliminateRow, int eliminateColumn, int rows, int column){
+
+    for (int i = 0; i < rows; i++){
+       matrix[i][eliminateColumn] = 0; 
+    }
+    for (int j = 0; j < column; j++){
+        matrix[eliminateRow][j] = 0;    
+    }
+
+    for (int i = 0; i < rows; i++){
+        for (int j = 0; j < column; j++){
+            cout << matrix[i][j] << "\t";
+        }
+        cout << endl;    
+    }
+}
