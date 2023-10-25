@@ -21,6 +21,8 @@ void guess(int hiddenMatrix[5][5], int matrix[5][5], int pointGain, int pointLos
 
 void eliminate(int matrix[5][5], int eliminateRow, int eliminateColumn, int rows, int column);
 
+bool allZeros(int matrix[5][5], int rows, int column);
+
 int main(){
 
     //options menu
@@ -48,6 +50,9 @@ int main(){
     int matrix[rows][column];
     int hiddenMatrix[rows][column];
 
+    // condition to quit
+    char playAgain = 'Y';
+
     header();
 
     initialize(hiddenMatrix, matrix, lowerBound, upperBound, displayedLowerBound, displayedUpperBound);
@@ -56,7 +61,7 @@ int main(){
 
     cout << "Welcome to the game " << userName << "." << endl;
 
-//    do{
+    do{
         //upperbound and lower bound display
         cout << displayedLowerBound << "\t\t" << displayedUpperBound << endl;
 
@@ -107,6 +112,13 @@ int main(){
 
         case Guess:
             guess(hiddenMatrix, matrix, pointGain, pointLoss, userScore,  rows, column);
+
+            if (allZeros(matrix, rows, column) == true){
+                cout << "Do you want to play another gamne?Y/N:";
+                cin  >> playAgain;
+                playAgain = toupper(playAgain);
+            }
+            
         break;
 
         case Change:
@@ -116,16 +128,20 @@ int main(){
         break;
 
         case Exit:
-            /* code */
+            playAgain = 'N'; 
         break;
     
         default :
-
+            cout <<" ";
         break;
     }
 
-//    } while ();
+    } while (playAgain == 'Y');
     
+    cout << "Bye " << userName << "!!!" << endl;
+    cout << "Your final score = " << userScore;
+
+
     return 0;
 
 }
@@ -236,6 +252,13 @@ void guess(int hiddenMatrix[5][5], int matrix[5][5], int pointGain, int pointLos
     
     int userGuess;
 
+    for (int i = 0; i < rows; i++){
+        for (int j = 0; j < column; j++){
+            cout << matrix[i][j] << "\t";
+        }
+        cout << endl;    
+    }
+
     cout << "Enter your guess: ";
     cin  >> userGuess;
     bool found = false;
@@ -278,4 +301,21 @@ void eliminate(int matrix[5][5], int eliminateRow, int eliminateColumn, int rows
         }
         cout << endl;    
     }
+}
+
+//
+bool allZeros(int matrix[][5], int rows, int column){
+
+    bool valid = true;
+
+    for (int i = 0; i < rows; i++){
+        for (int j = 0; j < column; j++){
+            if (matrix[i][j] != 0){
+                valid = false;
+            }
+            
+        }
+         
+    }
+    return valid;
 }
