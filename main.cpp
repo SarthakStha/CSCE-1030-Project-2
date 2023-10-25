@@ -17,7 +17,7 @@ void genHideMatrix(int hiddenMatrix[5][5], int lowerBound, int upperBound,  int 
 
 void initialize(int hiddenMatrix[5][5], int matrix[5][5], int &lowerBound, int &upperBound, int displayedLowerBound, int displayedUpperBound);
 
-void guess(int hiddenMatrix[5][5], int matrix[5][5], int pointGain, int pointLoss, int userScore ,int rows, int column);
+void guess(int hiddenMatrix[5][5], int matrix[5][5], int pointGain, int pointLoss, int &userScore ,int rows, int column);
 
 void eliminate(int matrix[5][5], int eliminateRow, int eliminateColumn, int rows, int column);
 
@@ -132,7 +132,7 @@ int main(){
         break;
     
         default :
-            cout <<" ";
+            cout <<"The choice you have selected in invalid try again.\n";
         break;
     }
 
@@ -248,7 +248,7 @@ void initialize(int hiddenMatrix[5][5], int matrix[5][5], int &lowerBound, int &
 }
  
  //
-void guess(int hiddenMatrix[5][5], int matrix[5][5], int pointGain, int pointLoss, int userScore ,int rows = 5, int column = 5){
+void guess(int hiddenMatrix[5][5], int matrix[5][5], int pointGain, int pointLoss, int &userScore ,int rows = 5, int column = 5){
     
     int userGuess;
 
