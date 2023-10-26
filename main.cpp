@@ -5,6 +5,7 @@
 
 using namespace std;
 
+//global variable declaration
 enum options {DisplayLeft = 1, DisplayRight = 2, Guess = 3, Change = 4, Exit = 5};
 
 void header();
@@ -64,7 +65,7 @@ int main(){
     cout << "Welcome to the game " << userName << "." << endl;
 
     do{
-        //upperbound and lower bound display
+        //upperbound and lower bound display for testing only
         cout << displayedLowerBound << "\t\t" << displayedUpperBound << endl;
 
         //user choice prompt
@@ -77,11 +78,10 @@ int main(){
         cout << "What would you like to do? ";
         cin  >> userChoice;
 
+        // changing options datatype to use switch case
         choices = static_cast<options>(userChoice);
 
-
-        switch (choices)
-        {
+        switch (choices){
             case DisplayLeft:
 
                 if(displayedUpperBound == -1){                   
@@ -99,6 +99,7 @@ int main(){
         break;
 
         case DisplayRight:
+
             if(displayedLowerBound == -1){                   
                         
                     displayedUpperBound = upperBound;
@@ -115,11 +116,12 @@ int main(){
         case Guess:
             guess(hiddenMatrix, matrix, pointGain, pointLoss, userScore,  rows, column);
 
+            // grid all zero check
             if (allZeros(matrix, rows, column) == true){
                 cout << "Do you want to play another gamne?Y/N:";
                 cin  >> playAgain;
                 playAgain = toupper(playAgain);
-            }else if(userScore < 0){
+            }else if(userScore < 0){ //2nd condition for game over( userScore < 0 ) check
                     cout << "your are out of points." << endl;
                     playAgain = 'N';
             }
@@ -127,15 +129,18 @@ int main(){
         break;
 
         case Change:
+
             initialize(hiddenMatrix, matrix, lowerBound, upperBound, displayedLowerBound, displayedUpperBound);
             userScore -= 1;
-            cout << "You lose 1 point for chosing to reset the board.\nYour remaining points = " << userScore;
+            cout << "You lose 1 point for chosing to reset the board.\nYour remaining points = " << userScore << endl;
+        
         break;
 
-        case Exit:
+        case Exit:// condition to quit
             playAgain = 'N'; 
         break;
     
+        // incase user inputs an invalid case
         default :
             cout <<"The choice you have selected in invalid try again.\n";
         break;
@@ -236,7 +241,7 @@ void genHideMatrix(int hiddenMatrix[5][5],int lowerBound, int upperBound, int ro
     }
 }
 
-//
+//creates a new lowerbound and upper bound & passes it to genHideMatrix and call genShowMatrix
 void initialize(int hiddenMatrix[5][5], int matrix[5][5], int &lowerBound, int &upperBound, int displayedLowerBound = -1, int displayedUpperBound = -1){
 
     //generating upper bound and lower bound for guess number generation range
@@ -252,7 +257,7 @@ void initialize(int hiddenMatrix[5][5], int matrix[5][5], int &lowerBound, int &
 
 }
  
- //
+ // takes the user guess and checks if the guess mataches with a value of the hidden matrix, call eliminate() if values match
 void guess(int hiddenMatrix[5][5], int matrix[5][5], int pointGain, int pointLoss, int &userScore ,int rows = 5, int column = 5){
     
     int userGuess;
@@ -285,7 +290,7 @@ void guess(int hiddenMatrix[5][5], int matrix[5][5], int pointGain, int pointLos
 
 };
 
-//
+//takes the position where the values match and replace all the values in the row & column fo the value with 0
 void eliminate(int matrix[5][5], int eliminateRow, int eliminateColumn, int rows, int column){
 
     for (int i = 0; i < rows; i++){
@@ -303,7 +308,8 @@ void eliminate(int matrix[5][5], int eliminateRow, int eliminateColumn, int rows
     }
 }
 
-//
+// check for the condition to prompt the user to end the game. check weather all the values of the shown grid is 0
+//returns true if all values are 0 else returns false
 bool allZeros(int matrix[][5], int rows, int column){
 
     bool valid = true;
@@ -320,7 +326,7 @@ bool allZeros(int matrix[][5], int rows, int column){
     return valid;
 }
 
-//
+//return all the value of a matrix that is passed as its parameter
 void showMatrix(int matirix[][5], int rows, int column){
 
     for (int i = 0; i < rows; i++){
