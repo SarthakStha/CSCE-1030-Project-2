@@ -119,7 +119,9 @@ int main(){
                 cout << "Do you want to play another gamne?Y/N:";
                 cin  >> playAgain;
                 playAgain = toupper(playAgain);
-
+            }else if(userScore < 0){
+                    cout << "your are out of points." << endl;
+                    playAgain = 'N';
             }
             
         break;
@@ -318,6 +320,7 @@ bool allZeros(int matrix[][5], int rows, int column){
     return valid;
 }
 
+//
 void showMatrix(int matirix[][5], int rows, int column){
 
     for (int i = 0; i < rows; i++){
