@@ -23,6 +23,8 @@ void eliminate(int matrix[5][5], int eliminateRow, int eliminateColumn, int rows
 
 bool allZeros(int matrix[5][5], int rows, int column);
 
+void showMatrix(int matirix[][5], int rows, int column);
+
 int main(){
 
     //options menu
@@ -117,6 +119,7 @@ int main(){
                 cout << "Do you want to play another gamne?Y/N:";
                 cin  >> playAgain;
                 playAgain = toupper(playAgain);
+
             }
             
         break;
@@ -252,12 +255,7 @@ void guess(int hiddenMatrix[5][5], int matrix[5][5], int pointGain, int pointLos
     
     int userGuess;
 
-    for (int i = 0; i < rows; i++){
-        for (int j = 0; j < column; j++){
-            cout << matrix[i][j] << "\t";
-        }
-        cout << endl;    
-    }
+    showMatrix(matrix, rows, column);
 
     cout << "Enter your guess: ";
     cin  >> userGuess;
@@ -318,4 +316,17 @@ bool allZeros(int matrix[][5], int rows, int column){
          
     }
     return valid;
+}
+
+void showMatrix(int matirix[][5], int rows, int column){
+
+    for (int i = 0; i < rows; i++){
+        for (int j = 0; j < column; j++){
+        
+            cout << matirix[i][j] << "\t";
+            
+        }
+        cout << endl;
+    }
+
 }
