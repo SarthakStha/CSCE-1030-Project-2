@@ -130,6 +130,10 @@ int main(){
 
         case Change:
 
+            pointGain = 5; 
+            pointLoss = 5;
+            cout << pointGain << endl;
+            cout << pointLoss << endl;
             initialize(hiddenMatrix, matrix, lowerBound, upperBound, displayedLowerBound, displayedUpperBound);
             userScore -= 1;
             cout << "You lose 1 point for chosing to reset the board.\nYour remaining points = " << userScore << endl;
