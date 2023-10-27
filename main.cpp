@@ -16,7 +16,7 @@ void genShowMatrix(int matrix[5][5], int rows , int column);
 
 void genHideMatrix(int hiddenMatrix[5][5], int lowerBound, int upperBound,  int rows, int column);
 
-void initialize(int hiddenMatrix[5][5], int matrix[5][5], int &lowerBound, int &upperBound, int displayedLowerBound, int displayedUpperBound);
+void initialize(int hiddenMatrix[5][5], int matrix[5][5], int &lowerBound, int &upperBound, int &displayedLowerBound, int &displayedUpperBound);
 
 void guess(int hiddenMatrix[5][5], int matrix[5][5], int pointGain, int pointLoss, int &userScore ,int rows, int column);
 
@@ -132,8 +132,8 @@ int main(){
 
             pointGain = 5; 
             pointLoss = 5;
-            cout << pointGain << endl;
-            cout << pointLoss << endl;
+            // cout << pointGain << endl;
+            // cout << pointLoss << endl;
             initialize(hiddenMatrix, matrix, lowerBound, upperBound, displayedLowerBound, displayedUpperBound);
             userScore -= 1;
             cout << "You lose 1 point for chosing to reset the board.\nYour remaining points = " << userScore << endl;
@@ -246,11 +246,16 @@ void genHideMatrix(int hiddenMatrix[5][5],int lowerBound, int upperBound, int ro
 }
 
 //creates a new lowerbound and upper bound & passes it to genHideMatrix and call genShowMatrix
-void initialize(int hiddenMatrix[5][5], int matrix[5][5], int &lowerBound, int &upperBound, int displayedLowerBound = -1, int displayedUpperBound = -1){
+void initialize(int hiddenMatrix[5][5], int matrix[5][5], int &lowerBound, int &upperBound, int &displayedLowerBound, int &displayedUpperBound){
 
     //generating upper bound and lower bound for guess number generation range
     lowerBound = (rand()%(100) + 100);
     upperBound = (rand()%(100) + 200);
+
+    //resenting the displayed upperboudn and lower bound
+    displayedLowerBound = -1;
+    displayedUpperBound = -1;
+
 
     //cout << displayedLowerBound << "\t\t" << displayedUpperBound << endl;
     
