@@ -8,24 +8,27 @@ using namespace std;
 //global variable declaration
 enum options {DisplayLeft = 1, DisplayRight = 2, Guess = 3, Change = 4, Exit = 5};
 
+
+// function declarations
 void header();
 
 string getName();
 
-void genShowMatrix(int matrix[5][5], int rows , int column);
+void genShowMatrix(int matrix[][5], int rows = 5, int column = 5);
 
-void genHideMatrix(int hiddenMatrix[5][5], int lowerBound, int upperBound,  int rows, int column);
+void genHideMatrix(int hiddenMatrix[][5], int lowerBound, int upperBound,  int rows = 5, int column = 5);
 
-void initialize(int hiddenMatrix[5][5], int matrix[5][5], int &lowerBound, int &upperBound, int &displayedLowerBound, int &displayedUpperBound);
+void initialize(int hiddenMatrix[][5], int matrix[][5], int &lowerBound, int &upperBound, int &displayedLowerBound, int &displayedUpperBound);
 
-void guess(int hiddenMatrix[5][5], int matrix[5][5], int pointGain, int pointLoss, int &userScore ,int rows, int column);
+void guess(int hiddenMatrix[][5], int matrix[][5], int pointGain, int pointLoss, int &userScore ,int rows = 5, int column = 5);
 
-void eliminate(int matrix[5][5], int eliminateRow, int eliminateColumn, int rows, int column);
+void eliminate(int matrix[][5], int eliminateRow, int eliminateColumn, int rows = 5, int column = 5);
 
-bool allZeros(int matrix[5][5], int rows, int column);
+bool allZeros(int matrix[][5], int rows = 5, int column = 5);
 
-void showMatrix(int matirix[][5], int rows, int column);
+void showMatrix(int matirix[][5], int rows = 5, int column = 5);
 
+// main function
 int main(){
 
     //options menu
@@ -114,10 +117,10 @@ int main(){
         break;
 
         case Guess:
-            guess(hiddenMatrix, matrix, pointGain, pointLoss, userScore,  rows, column);
+            guess(hiddenMatrix, matrix, pointGain, pointLoss, userScore);
 
             // grid all zero check
-            if (allZeros(matrix, rows, column) == true){
+            if (allZeros(matrix) == true){
                 cout << "Do you want to play another gamne?Y/N:";
                 cin  >> playAgain;
                 playAgain = toupper(playAgain);
@@ -220,7 +223,7 @@ string getName(){
 }
 
 //generates the shown matrix in a blank stae of 5x5 matrix -1 values 
-void genShowMatrix(int matrix[5][5], int rows =5, int column =5){
+void genShowMatrix(int matrix[][5], int rows, int column){
 
     for (int i = 0; i < rows; i++){
         for(int j = 0; j < column; j++){
@@ -230,7 +233,7 @@ void genShowMatrix(int matrix[5][5], int rows =5, int column =5){
 }
 
 //generates a 5x5 matrix with random value from within passed lowerbound and upperbound
-void genHideMatrix(int hiddenMatrix[5][5],int lowerBound, int upperBound, int rows = 5, int column = 5){
+void genHideMatrix(int hiddenMatrix[][5],int lowerBound, int upperBound, int rows, int column){
     
     srand((time(0)));
     // const int rows = 5;
@@ -246,7 +249,7 @@ void genHideMatrix(int hiddenMatrix[5][5],int lowerBound, int upperBound, int ro
 }
 
 //creates a new lowerbound and upper bound & passes it to genHideMatrix and call genShowMatrix
-void initialize(int hiddenMatrix[5][5], int matrix[5][5], int &lowerBound, int &upperBound, int &displayedLowerBound, int &displayedUpperBound){
+void initialize(int hiddenMatrix[][5], int matrix[][5], int &lowerBound, int &upperBound, int &displayedLowerBound, int &displayedUpperBound){
 
     //generating upper bound and lower bound for guess number generation range
     lowerBound = (rand()%(100) + 100);
@@ -267,11 +270,11 @@ void initialize(int hiddenMatrix[5][5], int matrix[5][5], int &lowerBound, int &
 }
  
  // takes the user guess and checks if the guess mataches with a value of the hidden matrix, call eliminate() if values match
-void guess(int hiddenMatrix[5][5], int matrix[5][5], int pointGain, int pointLoss, int &userScore ,int rows = 5, int column = 5){
+void guess(int hiddenMatrix[][5], int matrix[][5], int pointGain, int pointLoss, int &userScore ,int rows, int column){
     
     int userGuess;
 
-    showMatrix(matrix, rows, column);
+    showMatrix(matrix);
 
     cout << "Enter your guess: ";
     cin  >> userGuess;
@@ -285,7 +288,7 @@ void guess(int hiddenMatrix[5][5], int matrix[5][5], int pointGain, int pointLos
                 userScore += pointGain;
                 cout << "You guessed correctly. You gain " << pointGain << " points" << endl;
                 cout << "Your remaining points = " << userScore << endl;
-                eliminate(matrix, i, j, rows, column);
+                eliminate(matrix, i, j);
                 break;
             }
         }
@@ -300,7 +303,7 @@ void guess(int hiddenMatrix[5][5], int matrix[5][5], int pointGain, int pointLos
 };
 
 //takes the position where the values match and replace all the values in the row & column fo the value with 0
-void eliminate(int matrix[5][5], int eliminateRow, int eliminateColumn, int rows, int column){
+void eliminate(int matrix[][5], int eliminateRow, int eliminateColumn, int rows, int column){
 
     for (int i = 0; i < rows; i++){
        matrix[i][eliminateColumn] = 0; 
@@ -317,8 +320,8 @@ void eliminate(int matrix[5][5], int eliminateRow, int eliminateColumn, int rows
     }
 }
 
-// check for the condition to prompt the user to end the game. check weather all the values of the shown grid is 0
-//returns true if all values are 0 else returns false
+/* check for the condition to prompt the user to end the game. check weather all the values of the shown grid is 0
+returns true if all values are 0 else returns false*/
 bool allZeros(int matrix[][5], int rows, int column){
 
     bool valid = true;
