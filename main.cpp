@@ -22,6 +22,8 @@ void initialize(int hiddenMatrix[][5], int matrix[][5], int &lowerBound, int &up
 
 void displayLeft(int displayedUpperBound, int &displayedLowerBound, int lowerBound, int &pointGain, int &pointLoss);
 
+void displayRight(int displayedLowerBound, int &displayedUpperBound, int upperBound, int &pointGain, int &pointLoss);
+
 void guess(int hiddenMatrix[][5], int matrix[][5], int pointGain, int pointLoss, int &userScore ,int rows = 5, int column = 5);
 
 void eliminate(int matrix[][5], int eliminateRow, int eliminateColumn, int rows = 5, int column = 5);
@@ -91,33 +93,12 @@ int main(){
 
                 displayLeft(displayedUpperBound, displayedLowerBound, lowerBound, pointGain, pointLoss);
 
-                // if(displayedUpperBound == -1){                   
-                        
-                //     displayedLowerBound = lowerBound;
-                //     pointGain = 1;
-                //     pointLoss = 10;                           
-                //     //cout << displayedLowerBound << endl;                          
-                //     cout << "Now, you will gain " << pointGain << "  points for guessing correctly and lose " << pointLoss << " for guessing incorrectly" << endl;
-                        
-                // } else{
-                //     cout << "You have already displayed the right boundary, you cannot display both." << endl;
-                // };
-
         break;
 
         case DisplayRight:
 
-            if(displayedLowerBound == -1){                   
-                        
-                    displayedUpperBound = upperBound;
-                    pointGain = 1;
-                    pointLoss = 10; 
-                    //cout << displayedUpperBound << endl;                          
-                    cout << "Now, you will gain " << pointGain << "  points for guessing correctly and lose " << pointLoss << " for guessing incorrectly" << endl;
-                        
-                } else{
-                    cout << "You have already displayed the left boundary, you cannot display both." << endl;
-                };
+            displayRight(displayedLowerBound, displayedUpperBound, upperBound, pointGain, pointLoss);
+
         break;
 
         case Guess:
@@ -166,6 +147,8 @@ int main(){
     return 0;
 
 }
+
+//function definations
 
 // prints the student information header
 void header(){
@@ -278,16 +261,32 @@ void displayLeft(int displayedUpperBound, int &displayedLowerBound, int lowerBou
 
     if(displayedUpperBound == -1){                   
                         
-                    displayedLowerBound = lowerBound;
-                    pointGain = 1;
-                    pointLoss = 10;                           
-                    //cout << displayedLowerBound << endl;                          
-                    cout << "Now, you will gain " << pointGain << "  points for guessing correctly and lose " << pointLoss << " for guessing incorrectly" << endl;
+        displayedLowerBound = lowerBound;
+        pointGain = 1;
+        pointLoss = 10;                           
+        //cout << displayedLowerBound << endl;                          
+        cout << "Now, you will gain " << pointGain << "  points for guessing correctly and lose " << pointLoss << " for guessing incorrectly" << endl;
                         
-                } else{
-                    cout << "You have already displayed the right boundary, you cannot display both." << endl;
-                };
+        } else{
+            cout << "You have already displayed the right boundary, you cannot display both." << endl;
+        };
 
+}
+
+//Displays the upper limit from which the range was created
+void displayRight(int displayedLowerBound, int &displayedUpperBound, int upperBound, int &pointGain, int &pointLoss){
+
+    if(displayedLowerBound == -1){                   
+                        
+        displayedUpperBound = upperBound;
+        pointGain = 1;
+        pointLoss = 10; 
+        //cout << displayedUpperBound << endl;                          
+        cout << "Now, you will gain " << pointGain << "  points for guessing correctly and lose " << pointLoss << " for guessing incorrectly" << endl;
+                        
+    } else{
+        cout << "You have already displayed the left boundary, you cannot display both." << endl;
+    };
 
 }
 
