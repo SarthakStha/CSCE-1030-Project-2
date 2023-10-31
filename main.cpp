@@ -20,6 +20,8 @@ void genHideMatrix(int hiddenMatrix[][5], int lowerBound, int upperBound,  int r
 
 void initialize(int hiddenMatrix[][5], int matrix[][5], int &lowerBound, int &upperBound, int &displayedLowerBound, int &displayedUpperBound);
 
+void displayLeft(int displayedUpperBound, int &displayedLowerBound, int lowerBound, int &pointGain, int &pointLoss);
+
 void guess(int hiddenMatrix[][5], int matrix[][5], int pointGain, int pointLoss, int &userScore ,int rows = 5, int column = 5);
 
 void eliminate(int matrix[][5], int eliminateRow, int eliminateColumn, int rows = 5, int column = 5);
@@ -87,17 +89,19 @@ int main(){
         switch (choices){
             case DisplayLeft:
 
-                if(displayedUpperBound == -1){                   
+                displayLeft(displayedUpperBound, displayedLowerBound, lowerBound, pointGain, pointLoss);
+
+                // if(displayedUpperBound == -1){                   
                         
-                    displayedLowerBound = lowerBound;
-                    pointGain = 1;
-                    pointLoss = 10;                           
-                    //cout << displayedLowerBound << endl;                          
-                    cout << "Now, you will gain " << pointGain << "  points for guessing correctly and lose " << pointLoss << " for guessing incorrectly" << endl;
+                //     displayedLowerBound = lowerBound;
+                //     pointGain = 1;
+                //     pointLoss = 10;                           
+                //     //cout << displayedLowerBound << endl;                          
+                //     cout << "Now, you will gain " << pointGain << "  points for guessing correctly and lose " << pointLoss << " for guessing incorrectly" << endl;
                         
-                } else{
-                    cout << "You have already displayed the right boundary, you cannot display both." << endl;
-                };
+                // } else{
+                //     cout << "You have already displayed the right boundary, you cannot display both." << endl;
+                // };
 
         break;
 
@@ -269,6 +273,24 @@ void initialize(int hiddenMatrix[][5], int matrix[][5], int &lowerBound, int &up
 
 }
  
+// Displays the lower limit from which the range was created
+void displayLeft(int displayedUpperBound, int &displayedLowerBound, int lowerBound, int &pointGain, int &pointLoss){
+
+    if(displayedUpperBound == -1){                   
+                        
+                    displayedLowerBound = lowerBound;
+                    pointGain = 1;
+                    pointLoss = 10;                           
+                    //cout << displayedLowerBound << endl;                          
+                    cout << "Now, you will gain " << pointGain << "  points for guessing correctly and lose " << pointLoss << " for guessing incorrectly" << endl;
+                        
+                } else{
+                    cout << "You have already displayed the right boundary, you cannot display both." << endl;
+                };
+
+
+}
+
  // takes the user guess and checks if the guess mataches with a value of the hidden matrix, call eliminate() if values match
 void guess(int hiddenMatrix[][5], int matrix[][5], int pointGain, int pointLoss, int &userScore ,int rows, int column){
     
