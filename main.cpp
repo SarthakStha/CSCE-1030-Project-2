@@ -26,7 +26,7 @@ void eliminate(int matrix[][5], int eliminateRow, int eliminateColumn, int rows 
 
 bool allZeros(int matrix[][5], int rows = 5, int column = 5);
 
-void showMatrix(int matirix[][5], int rows = 5, int column = 5);
+void showMatrix(int matrix[][5], int rows = 5, int column = 5);
 
 // main function
 int main(){
@@ -339,12 +339,12 @@ bool allZeros(int matrix[][5], int rows, int column){
 }
 
 //return all the value of a matrix that is passed as its parameter
-void showMatrix(int matirix[][5], int rows, int column){
+void showMatrix(int matrix[][5], int rows, int column){
 
     for (int i = 0; i < rows; i++){
         for (int j = 0; j < column; j++){
         
-            cout << matirix[i][j] << "\t";
+            cout << matrix[i][j] << "\t";
             
         }
         cout << endl;
