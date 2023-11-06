@@ -8,6 +8,9 @@ using namespace std;
 //global variable declaration
 enum options {DisplayLeft = 1, DisplayRight = 2, Guess = 3, Change = 4, Exit = 5};
 
+/* the functions could be made cleaner by making the rows and column variable global but since they are not explicitly state in the project 2 document
+we have delcared the matrix rows and column as local variable of the main function
+*/
 
 // function declarations
 void header();
@@ -72,7 +75,6 @@ int main(){
     cout << "Welcome to the game " << userName << "." << endl;
 
     do{
-        //upperbound and lower bound display for testing only
         cout << displayedLowerBound << "\t\t" << displayedUpperBound << endl;
 
         //user choice prompt
@@ -223,15 +225,11 @@ void genShowMatrix(int matrix[][5], int rows, int column){
 void genHideMatrix(int hiddenMatrix[][5],int lowerBound, int upperBound, int rows, int column){
     
     srand((time(0)));
-    // const int rows = 5;
-    // const int column = 5;
 
     for (int i = 0; i < rows; i++){
         for (int j = 0; j < column; j++){
             hiddenMatrix[i][j] = (rand()%(1 + upperBound - lowerBound)) + lowerBound;
-            cout << hiddenMatrix[i][j] << "\t";
-        }
-        cout << endl;    
+        }   
     }
 }
 
@@ -242,17 +240,18 @@ void initialize(int hiddenMatrix[][5], int matrix[][5], int &lowerBound, int &up
     lowerBound = (rand()%(100) + 100);
     upperBound = (rand()%(100) + 200);
 
-    //resenting the displayed upperboudn and lower bound
+    //reseting the displayed upperboudn and lower bound
     displayedLowerBound = -1;
     displayedUpperBound = -1;
-
-
-    //cout << displayedLowerBound << "\t\t" << displayedUpperBound << endl;
     
-    cout << lowerBound << "\t\t" << upperBound << endl;
+    // For testing
+    //cout << lowerBound << "\t\t" << upperBound << endl;
 
     genShowMatrix(matrix);
     genHideMatrix(hiddenMatrix, lowerBound, upperBound);
+    
+    // For testing 
+    //showMatrix(hiddenMatrix);
 
 }
  
@@ -263,8 +262,7 @@ void displayLeft(int displayedUpperBound, int &displayedLowerBound, int lowerBou
                         
         displayedLowerBound = lowerBound;
         pointGain = 1;
-        pointLoss = 10;                           
-        //cout << displayedLowerBound << endl;                          
+        pointLoss = 10;                                                  
         cout << "Now, you will gain " << pointGain << "  points for guessing correctly and lose " << pointLoss << " for guessing incorrectly" << endl;
                         
         } else{
@@ -280,8 +278,7 @@ void displayRight(int displayedLowerBound, int &displayedUpperBound, int upperBo
                         
         displayedUpperBound = upperBound;
         pointGain = 1;
-        pointLoss = 10; 
-        //cout << displayedUpperBound << endl;                          
+        pointLoss = 10;                          
         cout << "Now, you will gain " << pointGain << "  points for guessing correctly and lose " << pointLoss << " for guessing incorrectly" << endl;
                         
     } else{
@@ -333,12 +330,8 @@ void eliminate(int matrix[][5], int eliminateRow, int eliminateColumn, int rows,
         matrix[eliminateRow][j] = 0;    
     }
 
-    for (int i = 0; i < rows; i++){
-        for (int j = 0; j < column; j++){
-            cout << matrix[i][j] << "\t";
-        }
-        cout << endl;    
-    }
+    showMatrix(matrix);
+
 }
 
 /* check for the condition to prompt the user to end the game. check weather all the values of the shown grid is 0
